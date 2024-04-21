@@ -1,26 +1,6 @@
-import { useState } from "react";
+const UserInput = ({ handleInput, userInput }) => {
 
-import { calculateInvestmentResults } from "../util/investment.js";
 
-const UserInput = ({ getInvestmentResult }) => {
-
-    const [userInput, setUserInput] = useState({
-        initialInvestment: 10000,
-        annualInvestment: 1200,
-        expectedReturn: 6,
-        duration: 10
-    });
-
-    function handleInput(newValue, type) {
-        setUserInput((prevState) => {
-            return {
-                ...prevState,
-                [type]: newValue
-            }
-        });
-
-        getInvestmentResult(calculateInvestmentResults(userInput));
-    }
 
     return (
         <div id="user-input">
