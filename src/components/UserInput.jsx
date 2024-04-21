@@ -3,61 +3,47 @@ import { useState } from "react";
 import { calculateInvestmentResults } from "../util/investment.js";
 
 const UserInput = ({ getInvestmentResult }) => {
-    const [investment, setInvestment] = useState(0);
-    const [annualInvestment, setAnnualInvestment] = useState(0);
-    const [expectedReturn, setExpectedReturn] = useState(0);
-    const [duration, setDuration] = useState(1);
 
-    function handleInput(event, type) {
+    const [userInput, setUserInput] = useState({
+        initialInvestment: 10000,
+        annualInvestment: 1200,
+        expectedReturn: 6,
+        duration: 10
+    });
 
-        const result = event.target.value !== '' ? event.target.value : 0;
+    function handleInput(newValue, type) {
+        setUserInput((prevState) => {
+            return {
+                ...prevState,
+                [type]: newValue
+            }
+        });
 
-        if (result < 1) {
-            alert('Please input more than 1')
-            return;
-        }
-        const investmentResult = {
-            initialInvestment: investment,
-            annualInvestment: annualInvestment,
-            expectedReturn: expectedReturn,
-            duration: duration,
-        }
-
-        if (type === 'investment') {
-            setInvestment(parseInt(result));
-            investmentResult.initialInvestment = parseInt(result);
-        } else if (type === 'annualInvestment') {
-            setAnnualInvestment(parseInt(result));
-            investmentResult.annualInvestment = parseInt(result);
-        } else if (type === 'expectedReturn') {
-            setExpectedReturn(parseInt(result));
-            investmentResult.expectedReturn = parseInt(result);
-        } else if (type === 'duration') {
-            setDuration(parseInt(result));
-            investmentResult.duration = parseInt(result);
-        }
-
-        getInvestmentResult(calculateInvestmentResults(investmentResult));
+        getInvestmentResult(calculateInvestmentResults(userInput));
     }
-
-
 
     return (
         <div id="user-input">
             <div className="input-group">
-                <div className="input">
+                <p>
                     <label>Initial Investment</label>
-                    <input type="number" value={investment} onChange={() => handleInput(event, 'investment')} />
-
-                    <label>Expected Return</label>
-                    <input type="number" value={expectedReturn} onChange={() => handleInput(event, 'expectedReturn')} />
-                </div>
-                <div className="input">
+                    <input type="number" value={userInput.initialInvestment} onChange={(event) => handleInput(event.target.value, 'initialInvestment')} required />
+                </p>
+                <p>
                     <label>Annual Investment</label>
-                    <input type="number" value={annualInvestment} onChange={() => handleInput(event, 'annualInvestment')} />
+                    <input type="number" value={userInput.annualInvestment} onChange={(event) => handleInput(event.target.value, 'annualInvestment')} required />
+                </p>
+
+            </div>
+            <div className="input-group">
+                <p>
+                    <label>Expected Return</label>
+                    <input type="number" step="0.01" value={userInput.expectedReturn} onChange={(event) => handleInput(event.target.value, 'expectedReturn')} required />
+                </p>
+                <p>
                     <label>Duration</label>
-                    <input type="number" value={duration} onChange={() => handleInput(event, 'duration')} />
-                </div>
+                    <input type="number" value={userInput.duration} onChange={(event) => handleInput(event.target.value, 'duration')} required />
+                </p>
             </div>
         </div>
     )
