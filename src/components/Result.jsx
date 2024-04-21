@@ -1,6 +1,7 @@
-import { formatter } from "../util/investment.js";
+import { calculateInvestmentResults, formatter } from "../util/investment.js";
 
 const Result = ({ investment }) => {
+    const investmentData = calculateInvestmentResults(investment)
     return (
         <table id="result">
             <thead>
@@ -13,7 +14,7 @@ const Result = ({ investment }) => {
                 </tr>
             </thead>
             <tbody>
-                {investment.map((invest, key) => {
+                {investmentData.map((invest, key) => {
                     return <tr key={key}>
                         <td>{invest.year}</td>
                         <td>{formatter.format(invest.valueEndOfYear)}</td>
