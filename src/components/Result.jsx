@@ -16,10 +16,10 @@ const Result = ({ investment }) => {
                 {investment.map((invest, key) => {
                     return <tr key={key}>
                         <td>{invest.year}</td>
-                        <td>{formatter.format(invest.interest)}</td>
-                        <td>{formatter.format(invest.interest)}</td>
                         <td>{formatter.format(invest.valueEndOfYear)}</td>
-                        <td>{formatter.format(invest.annualInvestment)}</td>
+                        <td>{formatter.format(invest.interest)}</td>
+                        <td>{formatter.format(invest.interest)}</td>
+                        <td>{formatter.format(invest.valueEndOfYear - invest.interest)}</td>
                     </tr>
                 })}
             </tbody>
